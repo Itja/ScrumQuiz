@@ -97,13 +97,16 @@ def read_file(filename):
 
 questions = read_file("questions.txt")
 
-def print_text():
-    for q in questions:
-        print(q)
-        print()
+try:
+    with open('./converted.txt', 'w', encoding='utf-8') as ctxt:
+        for q in questions:
+            ctxt.write(q.__str__() + "\n\n")
 
-def print_json():
     questions_dicts = [q.to_dict() for q in questions]
-    print(json.dumps(questions_dicts))
+    with open('./converted.js', 'w', encoding='utf-8') as cjs:
+        cjs.write("var questions = " + json.dumps(questions_dicts))
+        cjs.write("\n")
 
-print_text()
+    print("Files written successfully.")
+except Exception as e:
+    print(f"Error on writing files: {e}")
