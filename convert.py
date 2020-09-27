@@ -102,9 +102,8 @@ def print_text():
         print(q)
         print()
 
-#prn()
 def print_json():
     questions_dicts = [q.to_dict() for q in questions]
     print(json.dumps(questions_dicts))
 
-print_json()
+print_text()
