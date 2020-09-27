@@ -1,11 +1,69 @@
 <html>
     <script src="converted.js"></script>
     <script src="quiz.js"></script>
+    <style>
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#main {
+    width: 600px;
+    min-height: 600px;
+    background-color: #fefefe;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding-top: 10em;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
+
+#q_title {
+    font-size: 14pt;
+    min-height: 100px;
+}
+
+#q_answers {
+    min-height: 300px;
+}
+
+.answer {
+    margin: 1em 0;
+}
+
+.answer-correct {
+    background-color: #9ccc65;
+    font-weight: bold;
+}
+
+.answer-wrong-shouldcheck {
+    text-decoration: underline;
+    background-color: #ff9800;
+    font-weight: bold;
+}
+.answer-wrong-shouldcheck::after {
+    content: " would have been correct";
+    background-color: white;
+    font-weight: normal;
+}
+
+.answer-wrong-shouldnotcheck {
+    background-color: #ef5350;
+    text-decoration: line-through;
+}
+    </style>
     <body>
-        <h1>Scrum Quiz</h1>
         <div id="main">
+            <h3>Scrum Quiz</h3>
             <p id="q_title">Question?</p>
             <div id="q_answers"></div>
+            <div id="q_remarks"></div>
+            <div id="q_notes"></div>
             <div id="q_ok">
                 <button id="btn_chk_answers" onclick="checkAnswers()" style="display: none">Check Answers</button>
                 <button id="btn_next" onclick="nextQuestion()">Next Question &gt;</button>
