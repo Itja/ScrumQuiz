@@ -15,6 +15,9 @@ class Question:
             linenum += 1
             if linenum == 0:
                 self.question = line
+                m = re.search(r"^\d+[\.\):]?\s*(.*)$", line)
+                if m:
+                    self.question = m.group(1)
                 continue
 
             m = re.search(r"^[cC]orrect answers?:? (.*)$", line)
