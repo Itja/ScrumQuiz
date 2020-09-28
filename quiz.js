@@ -1,9 +1,10 @@
 
-var mainDiv, questionTitleDiv, answersDiv, checkAnswersBtn, nextBtn, remarksDiv, notesDiv;
+var mainDiv, questionTitleDiv, answersDiv, checkAnswersBtn, nextBtn, remarksDiv, notesDiv, statsDiv;
 
 var unansweredQuestions = [];
 var currentQuestionId = null;
 var currentAnswerElements = {};
+var statistics;
 
 function addAnswer(letter, text) {
     let div = document.createElement("div");
@@ -45,8 +46,14 @@ function loadQuestion(id) {
         remarksDiv.innerHTML += "<p>" + ex + "</p>";
     }
     clearAnswers();
+    let chooseBest = 0;
     for (let letter in q.answers) {
         addAnswer(letter, q.answers[letter]);
+        if (q.correct.includes(letter))
+            chooseBest++;
+    }
+    if (chooseBest > 0) {
+        notesDiv.innerHTML = `Choose the best ${chooseBest > 1 ? chooseBest : ''} answer${chooseBest > 1 ? 's' : ''}.`;
     }
 }
 
@@ -74,21 +81,35 @@ function initQuestions() {
         unansweredQuestions.push(i);
     }
     shuffleArray(unansweredQuestions);
+    statistics = {
+        correct: 0,
+        wrong: 0,
+        todo: questions.length
+    };
+}
+
+function writeStats() {
+    let questionsDone = questions.length - unansweredQuestions.length;
+    let perc = questionsDone > 0 ? Math.floor(100 * (statistics.correct / questionsDone)) : "X";
+    statsDiv.innerHTML = `Questions left: ${unansweredQuestions.length}. Answers wrong: <strong>${statistics.wrong}</strong> correct: <strong>${statistics.correct}</strong> (<strong>${perc}%</strong>)`
 }
 
 
 function checkAnswers() {
     let q = questions[currentQuestionId];
     console.log(`Question ${currentQuestionId} Correct: ${q.correct}`);
+    let answerWrong = false;
+    let dontCount = false;
     for (let letter of q.correct) {
         let inp = currentAnswerElements[letter]?.input;
         if (inp) {
             if (inp.checked) {
                 currentAnswerElements[letter].label.setAttribute("class", "answer-correct");
-                console.log(`HOORAY, ${letter} IS CORRECTLY CHECKED`)
+                console.log(`HOORAY, ${letter} IS CORRECTLY CHECKED`);
             } else {
                 currentAnswerElements[letter].label.setAttribute("class", "answer-wrong-shouldcheck");
-                console.log(`DAMN, ${letter} IS NOT CHECKED, BUT IT SHOULD BE`)
+                console.log(`DAMN, ${letter} IS NOT CHECKED, BUT IT SHOULD BE`);
+                answerWrong = true;
             }
         }
     }
@@ -97,14 +118,25 @@ function checkAnswers() {
             let inp = currentAnswerElements[letter].input;
             if (inp.checked && !q.correct.includes(letter)) {
                 currentAnswerElements[letter].label.setAttribute("class", "answer-wrong-shouldnotcheck");
-                console.log(`DAMN, ${letter} IS CHECKED, BUT IT SHOULDN'T BE`)
+                console.log(`DAMN, ${letter} IS CHECKED, BUT IT SHOULDN'T BE`);
+                answerWrong = true;
             }
             inp.setAttribute("disabled", "disabled");
         }
     } else {
+        dontCount = true;
         notesDiv.innerHTML = "We have no correct answers recorded for this question. Assess yourself!";
     }
 
+    if (!dontCount) {
+        if (answerWrong) {
+            statistics.wrong++;
+        } else {
+            statistics.correct++;
+        }
+    }
+
+    writeStats();
     checkAnswersBtn.style.display = 'none';
     nextBtn.style.display = 'block';
     remarksDiv.style.display = 'block';
@@ -118,6 +150,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     nextBtn = document.getElementById("btn_next");
     remarksDiv = document.getElementById("q_remarks");
     notesDiv = document.getElementById("q_notes");
+    statsDiv = document.getElementById("q_stats");
 
     addAnswer("A", "Welcome");
     addAnswer("B", "Please click the button to begin");
