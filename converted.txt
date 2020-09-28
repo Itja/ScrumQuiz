@@ -831,10 +831,10 @@ Question 108: How is management external to the Scrum team involved in the daily
 	D) The Product Owner represents their opinions
 
 
-Question 109: When is it most appropriate for a Development Team to change the definition
+Question 109: When is it most appropriate for a Development Team to change the definition of “Done”
 	A) During Sprint Planning
 	B) Prior to starting a new project
-	C) Prior to starting a new Sprint of “Done”
+	C) Prior to starting a new Sprint
 	D*) During the Sprint retrospective
 
 

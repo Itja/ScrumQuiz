@@ -1395,10 +1395,10 @@ C)   The Development Team self manages and is the only management required at th
 D)   The Product Owner represents their opinions
 
 
-0. When is it most appropriate for a Development Team to change the definition 
+0. When is it most appropriate for a Development Team to change the definition of “Done”
 A)    During Sprint Planning
 B)    Prior to starting a new project
-C)   Prior to starting a new Sprint of “Done”
+C)   Prior to starting a new Sprint
 D) During the Sprint retrospective
 Correct answer: D)
  

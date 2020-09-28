@@ -17,7 +17,7 @@ body {
     top: 0;
     bottom: 0;
     margin: auto;
-    padding-top: 10em;
+    padding-top: 4em;
     max-width: 100%;
     max-height: 100%;
     overflow: auto;
@@ -32,7 +32,7 @@ body {
     min-height: 300px;
 }
 
-.answer {
+div, .answer {
     margin: 1em 0;
 }
 
@@ -61,9 +61,9 @@ body {
         <div id="main">
             <h3>Scrum Quiz</h3>
             <p id="q_title">Question?</p>
+            <div id="q_notes"></div>
             <div id="q_answers"></div>
             <div id="q_remarks"></div>
-            <div id="q_notes"></div>
             <div id="q_ok">
                 <button id="btn_chk_answers" onclick="checkAnswers()" style="display: none">Check Answers</button>
                 <button id="btn_next" onclick="nextQuestion()">Next Question &gt;</button>
